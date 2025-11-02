@@ -1,25 +1,23 @@
 ---
 // src/components/Gallery.astro
-import { galleryData } from '../data.js'; // [cite: momoring0726/kapedadiangas-astro-tailwind/kapedadiangas-astro-tailwind-085111ccb737fbaaba88e1e99fcb92fd267dfea8/src/data.js]
+import { galleryData } from '../data.js';
 ---
 
-<!--
-  1. The Gallery Grid
-  This now just maps over your images and displays them.
-  All <a> tags, modal HTML, and <script> tags have been removed.
--->
 <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
 	{
 		galleryData.map((item) => (
-			<div class="block overflow-hidden rounded-lg shadow-sm">
+			<a
+				href={item.src}
+				data-alt={item.alt}
+				class="gallery-item group block overflow-hidden rounded-lg shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
+			>
 				<img
 					src={item.src}
 					alt={item.alt}
-					class="w-full h-auto"
+					class="h-auto w-full transform transition-transform duration-300 group-hover:scale-105"
 					loading="lazy"
 				/>
-			</div>
+			</a>
 		))
 	}
 </div>
-
