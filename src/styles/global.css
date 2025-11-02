@@ -1,0 +1,24 @@
+/* src/styles/global.css */
+@import 'tailwindcss';
+
+/*
+  This block defines your custom theme.
+  Tailwind will automatically create classes like
+  'bg-primary', 'text-light', 'font-heading', etc.
+*/
+@theme {
+	--color-primary: #c5a880;
+	--color-dark: #1a120b;
+	--color-light: #f0e6d6;
+
+	--font-heading: 'Playfair Display', serif;
+	--font-body: 'Roboto', sans-serif;
+}
+
+/*
+  This sets the default styles for your site,
+  using the theme variables we just defined.
+*/
+body {
+	@apply font-body bg-dark text-gray-300;
+}

@@ -1,0 +1,33 @@
+---
+// src/components/MenuItem.astro
+export interface Props {
+	item: {
+		name: string;
+		price: string;
+		description: string;
+		image: string;
+		alt: string;
+		category: string;
+	};
+}
+
+const { item } = Astro.props;
+---
+
+<div
+	class="menu-item flex h-full flex-col overflow-hidden rounded-lg border border-white/10 bg-gray-900/70 shadow-lg transition-transform duration-300 hover:-translate-y-2 hover:shadow-black/30"
+	data-category={item.category}
+>
+	<img
+		src={item.image}
+		alt={item.alt}
+		class="h-[250px] w-full object-cover"
+	/>
+	<div class="flex h-full flex-col p-6">
+		<div class="flex items-center justify-between">
+			<h4 class="font-heading text-2xl text-primary">{item.name}</h4>
+			<p class="font-heading text-2xl font-bold text-primary">{item.price}</p>
+		</div>
+		<p class="mt-2 flex-grow text-light/90">{item.description}</p>
+	</div>
+</div>
