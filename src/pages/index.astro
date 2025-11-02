@@ -7,253 +7,225 @@ import Gallery from "../components/Gallery.astro";
 ---
 
 <Layout title="Kape Dadiangas - A Modern Coffee Experience">
-	<section
-		id="home"
-		class="flex min-h-screen items-center justify-center py-24 text-center"
-	>
-		<div class="container mx-auto px-4">
-			<div class="fade-in-section">
-				<h1
-					class="font-heading text-6xl text-white drop-shadow-lg md:text-7xl"
-				>
-					Your Daily Brew, The GenSan Way.
-				</h1>
-				<p
-					class="mx-auto my-6 max-w-2xl text-xl text-light drop-shadow-md md:text-2xl"
-				>
-					Experience the rich aroma of locally-sourced beans in a
-					space that feels like home.
-				</p>
-				<a
-					href="#menu"
-					class="inline-block rounded-full bg-primary px-10 py-4 font-body text-lg font-bold uppercase tracking-wider text-dark transition-all duration-300 hover:-translate-y-1 hover:bg-transparent hover:text-primary hover:shadow-lg"
-				>
-					Explore Our Menu
-				</a>
-			</div>
-		</div>
-	</section>
+  <section
+    id="home"
+    class="flex min-h-screen items-center justify-center py-24 text-center"
+  >
+    <div class="container mx-auto px-4">
+      <div class="fade-in-section">
+        <h1 class="font-heading text-6xl text-white drop-shadow-lg md:text-7xl">
+          Your Daily Brew, The GenSan Way.
+        </h1>
+        <p
+          class="mx-auto my-6 max-w-2xl text-xl text-light drop-shadow-md md:text-2xl"
+        >
+          Experience the rich aroma of locally-sourced beans in a space that
+          feels like home.
+        </p>
+        <a
+          href="#menu"
+          class="inline-block rounded-full bg-primary px-10 py-4 font-body text-lg font-bold uppercase tracking-wider text-dark transition-all duration-300 hover:-translate-y-1 hover:bg-transparent hover:text-primary hover:shadow-lg"
+        >
+          Explore Our Menu
+        </a>
+      </div>
+    </div>
+  </section>
 
-	<section id="about" class="py-24">
-		<div class="container mx-auto px-4">
-			<div
-				class="fade-in-section grid grid-cols-1 items-center gap-12 lg:grid-cols-2"
-			>
-				<div>
-					<img
-						src="/img/About/Our Story.png"
-						class="img-fluid rounded-lg shadow-lg"
-						alt="Our Story"
-					/>
-				</div>
-				<div>
-					<h2 class="font-heading text-5xl text-white md:text-6xl">
-						Brewed in the Heart of GenSan
-					</h2>
-					<p class="my-4 font-body text-2xl text-primary">
-						Our Story
-					</p>
-					<p class="mb-4 text-lg leading-relaxed">
-						Kape Dadiangas is more than a name; it's our promise.
-						It’s a tribute to the original spirit of our home,
-						General Santos City, and a nod to the simple, powerful
-						ritual of a great cup of coffee.
-					</p>
-					<p class="text-lg leading-relaxed">
-						Our journey began with a dream: to create a warm,
-						welcoming space where the community could gather. We
-						partner directly with local farmers in SOCCSKSARGEN,
-						ensuring that every sip you take supports the hands that
-						harvested it.
-					</p>
-				</div>
-			</div>
-		</div>
-	</section>
+  <section id="about" class="py-24">
+    <div class="container mx-auto px-4">
+      <div
+        class="fade-in-section grid grid-cols-1 items-center gap-12 lg:grid-cols-2"
+      >
+        <div>
+          <img
+            src="/img/About/Our Story.png"
+            class="img-fluid rounded-lg shadow-lg"
+            alt="Our Story"
+          />
+        </div>
+        <div>
+          <h2 class="font-heading text-5xl text-white md:text-6xl">
+            Brewed in the Heart of GenSan
+          </h2>
+          <p class="my-4 font-body text-2xl text-primary">Our Story</p>
+          <p class="mb-4 text-lg leading-relaxed">
+            Kape Dadiangas is more than a name; it's our promise. It’s a tribute
+            to the original spirit of our home, General Santos City, and a nod
+            to the simple, powerful ritual of a great cup of coffee.
+          </p>
+          <p class="text-lg leading-relaxed">
+            Our journey began with a dream: to create a warm, welcoming space
+            where the community could gather. We partner directly with local
+            farmers in SOCCSKSARGEN, ensuring that every sip you take supports
+            the hands that harvested it.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-	<section id="menu" class="bg-black/20 py-24 backdrop-blur-sm">
-		<div class="container mx-auto px-4">
-			<div class="fade-in-section">
-				<div class="mb-12 text-center">
-					<h2 class="font-heading text-5xl text-white md:text-6xl">
-						Handcrafted With Pride
-					</h2>
-					<p class="mt-2 font-body text-2xl text-primary">Our Menu</p>
-				</div>
+  <section id="menu" class="bg-black/20 py-24 backdrop-blur-sm">
+    <div class="container mx-auto px-4">
+      <div class="fade-in-section">
+        <div class="mb-12 text-center">
+          <h2 class="font-heading text-5xl text-white md:text-6xl">
+            Handcrafted With Pride
+          </h2>
+          <p class="mt-2 font-body text-2xl text-primary">Our Menu</p>
+        </div>
 
-				<div
-					id="menu-filters"
-					class="my-8 flex flex-wrap justify-center gap-2"
-				>
-					<button
-						class="filter-btn rounded-full border-2 border-primary bg-primary px-6 py-2 text-dark transition-all duration-300"
-						data-filter="all">All</button
-					>
-					<button
-						class="filter-btn rounded-full border-2 border-primary bg-transparent px-6 py-2 text-primary transition-all duration-300 hover:bg-primary hover:text-dark"
-						data-filter="hot">Hot Coffee</button
-					>
-					<button
-						class="filter-btn rounded-full border-2 border-primary bg-transparent px-6 py-2 text-primary transition-all duration-300 hover:bg-primary hover:text-dark"
-						data-filter="iced">Iced Coffee</button
-					>
-					<button
-						class="filter-btn rounded-full border-2 border-primary bg-transparent px-6 py-2 text-primary transition-all duration-300 hover:bg-primary hover:text-dark"
-						data-filter="pastries">Pastries</button
-					>
-				</div>
+        <div id="menu-filters" class="my-8 flex flex-wrap justify-center gap-2">
+          <button
+            class="filter-btn rounded-full border-2 border-primary bg-primary px-6 py-2 text-dark transition-all duration-300"
+            data-filter="all">All</button
+          >
+          <button
+            class="filter-btn rounded-full border-2 border-primary bg-transparent px-6 py-2 text-primary transition-all duration-300 hover:bg-primary hover:text-dark"
+            data-filter="hot">Hot Coffee</button
+          >
+          <button
+            class="filter-btn rounded-full border-2 border-primary bg-transparent px-6 py-2 text-primary transition-all duration-300 hover:bg-primary hover:text-dark"
+            data-filter="iced">Iced Coffee</button
+          >
+          <button
+            class="filter-btn rounded-full border-2 border-primary bg-transparent px-6 py-2 text-primary transition-all duration-300 hover:bg-primary hover:text-dark"
+            data-filter="pastries">Pastries</button
+          >
+        </div>
 
-				<div
-					id="menu-grid"
-					class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
-				>
-					{menuData.map((item) => <MenuItem item={item} />)}
-				</div>
-			</div>
-		</div>
-	</section>
+        <div
+          id="menu-grid"
+          class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
+        >
+          {menuData.map((item) => <MenuItem item={item} />)}
+        </div>
+      </div>
+    </div>
+  </section>
 
-	<section id="gallery" class="py-24">
-		<div class="container mx-auto px-4">
-			<div class="fade-in-section">
-				<div class="mb-12 text-center">
-					<h2 class="font-heading text-5xl text-white md:text-6xl">
-						Moments at Kape Dadiangas
-					</h2>
-					<p class="mt-2 font-body text-2xl text-primary">
-						Our Gallery
-					</p>
-				</div>
-				<Gallery />
-			</div>
-		</div>
-	</section>
+  <section id="gallery" class="py-24">
+    <div class="container mx-auto px-4">
+      <div class="fade-in-section">
+        <div class="mb-12 text-center">
+          <h2 class="font-heading text-5xl text-white md:text-6xl">
+            Moments at Kape Dadiangas
+          </h2>
+          <p class="mt-2 font-body text-2xl text-primary">Our Gallery</p>
+        </div>
+        <Gallery />
+      </div>
+    </div>
+  </section>
 
-	<section id="contact" class="bg-black/20 py-24 backdrop-blur-sm">
-		<div class="container mx-auto px-4">
-			<div class="fade-in-section">
-				<div class="mb-12 text-center">
-					<h2 class="font-heading text-5xl text-white md:text-6xl">
-						Find Us
-					</h2>
-					<p class="mt-2 font-body text-2xl text-primary">
-						Come Say Hello
-					</p>
-				</div>
-				<div class="grid grid-cols-1 gap-12 lg:grid-cols-2">
-					<div
-						class="overflow-hidden rounded-lg border border-white/10"
-					>
-						<iframe
-							src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126912.65964893444!2d125.0747008432832!3d6.11544837508708!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x32f79f22f5c1df49%3A0x62e9314c61cb4611!2sGeneral%20Santos%20City%2C%20South%20Cotabato!5e0!3m2!1sen!2sph!4v1678888888888!5m2!1sen!2sph"
-							width="100%"
-							height="450"
-							style="border:0;"
-							allowfullscreen=""
-							loading="lazy"
-							referrerpolicy="no-referrer-when-downgrade"
-						></iframe>
-					</div>
-					<div class="font-body text-lg">
-						<h3 class="mb-4 font-heading text-3xl text-white">
-							Our Home
-						</h3>
-						<p class="flex items-start">
-							<i
-								class="bi bi-geo-alt-fill mr-4 pt-1 text-xl text-primary"
-							></i>
-							<span>
-								Pioneer Avenue, Brgy. Dadiangas East<br />
-								General Santos City, 9500
-							</span>
-						</p>
-						<h4 class="mt-8 font-heading text-2xl text-white">
-							Opening Hours
-						</h4>
-						<ul class="mt-4 list-inside space-y-2">
-							<li
-								class="flex justify-between border-b border-dotted border-white/20 pb-2"
-							>
-								<strong>Mon – Fri:</strong>
-								<span>9:00 AM – 8:00 PM</span>
-							</li>
-							<li
-								class="flex justify-between border-b border-dotted border-white/20 pb-2"
-							>
-								<strong>Saturday:</strong>
-								<span>10:00 AM – 10:00 PM</span>
-							</li>
-							<li class="flex justify-between pb-2">
-								<strong>Sunday:</strong>
-								<span>10:00 AM – 6:00 PM</span>
-							</li>
-						</ul>
-						<h4 class="mt-8 font-heading text-2xl text-white">
-							Get in Touch
-						</h4>
-						<p class="mt-4 flex items-center">
-							<i
-								class="bi bi-telephone-fill mr-4 text-xl text-primary"
-							></i>
-							<span>(083) 555-1234</span>
-						</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+  <section id="contact" class="bg-black/20 py-24 backdrop-blur-sm">
+    <div class="container mx-auto px-4">
+      <div class="fade-in-section">
+        <div class="mb-12 text-center">
+          <h2 class="font-heading text-5xl text-white md:text-6xl">Find Us</h2>
+          <p class="mt-2 font-body text-2xl text-primary">Come Say Hello</p>
+        </div>
+        <div class="grid grid-cols-1 gap-12 lg:grid-cols-2">
+          <div class="overflow-hidden rounded-lg border border-white/10">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126912.65964893444!2d125.0747008432832!3d6.11544837508708!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x32f79f22f5c1df49%3A0x62e9314c61cb4611!2sGeneral%20Santos%20City%2C%20South%20Cotabato!5e0!3m2!1sen!2sph!4v1678888888888!5m2!1sen!2sph"
+              width="100%"
+              height="450"
+              style="border:0;"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+          <div class="font-body text-lg">
+            <h3 class="mb-4 font-heading text-3xl text-white">Our Home</h3>
+            <p class="flex items-start">
+              <i class="bi bi-geo-alt-fill mr-4 pt-1 text-xl text-primary"></i>
+              <span>
+                Pioneer Avenue, Brgy. Dadiangas East<br />
+                General Santos City, 9500
+              </span>
+            </p>
+            <h4 class="mt-8 font-heading text-2xl text-white">Opening Hours</h4>
+            <ul class="mt-4 list-inside space-y-2">
+              <li
+                class="flex justify-between border-b border-dotted border-white/20 pb-2"
+              >
+                <strong>Mon – Fri:</strong>
+                <span>9:00 AM – 8:00 PM</span>
+              </li>
+              <li
+                class="flex justify-between border-b border-dotted border-white/20 pb-2"
+              >
+                <strong>Saturday:</strong>
+                <span>10:00 AM – 10:00 PM</span>
+              </li>
+              <li class="flex justify-between pb-2">
+                <strong>Sunday:</strong>
+                <span>10:00 AM – 6:00 PM</span>
+              </li>
+            </ul>
+            <h4 class="mt-8 font-heading text-2xl text-white">Get in Touch</h4>
+            <p class="mt-4 flex items-center">
+              <i class="bi bi-telephone-fill mr-4 text-xl text-primary"></i>
+              <span>(083) 555-1234</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </Layout>
 
 <script>
-	const filterButtons = document.querySelectorAll(".filter-btn");
-	const menuItems = document.querySelectorAll(".menu-item");
+  const filterButtons = document.querySelectorAll(".filter-btn");
+  const menuItems = document.querySelectorAll(".menu-item");
 
-	// This should match your transition duration from MenuItem.astro (300ms)
-	const animationDuration = 300;
+  // This should match your transition duration from MenuItem.astro (300ms)
+  const animationDuration = 300;
 
-	filterButtons.forEach((button) => {
-		button.addEventListener("click", () => {
-			const htmlButton = button as HTMLElement;
-			const filter = htmlButton.dataset.filter;
+  filterButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const htmlButton = button as HTMLElement;
+      const filter = htmlButton.dataset.filter;
 
-			// Set active class styling
-			filterButtons.forEach((btn) => {
-				btn.classList.add("bg-transparent", "text-primary");
-				btn.classList.remove("bg-primary", "text-dark");
-			});
-			htmlButton.classList.remove("bg-transparent", "text-primary");
-			htmlButton.classList.add("bg-primary", "text-dark");
+      // Set active class styling
+      filterButtons.forEach((btn) => {
+        btn.classList.add("bg-transparent", "text-primary");
+        btn.classList.remove("bg-primary", "text-dark");
+      });
+      htmlButton.classList.remove("bg-transparent", "text-primary");
+      htmlButton.classList.add("bg-primary", "text-dark");
 
-			// Show/hide menu items
-			menuItems.forEach((item) => {
-				const htmlItem = item as HTMLElement;
-				const isMatch =
-					filter === "all" || htmlItem.dataset.category === filter;
+      // Show/hide menu items
+      menuItems.forEach((item) => {
+        const htmlItem = item as HTMLElement;
+        const isMatch =
+          filter === "all" || htmlItem.dataset.category === filter;
 
-				if (isMatch) {
-					// --- Item should be SHOWN ---
+        if (isMatch) {
+          // --- Item should be SHOWN ---
 
-					// 1. Remove 'hidden' to make it part of the layout
-					htmlItem.classList.remove("hidden");
+          // 1. Remove 'hidden' to make it part of the layout
+          htmlItem.classList.remove("hidden");
 
-					// 2. Wait for a tiny moment (a "tick") for the browser
-					//    to register the display change, then start the animation.
-					setTimeout(() => {
-						htmlItem.classList.remove("opacity-0", "scale-90");
-					}, 10); // 10ms is enough
-				} else {
-					// --- Item should be HIDDEN ---
+          // 2. Wait for a tiny moment (a "tick") for the browser
+          //    to register the display change, then start the animation.
+          setTimeout(() => {
+            htmlItem.classList.remove("opacity-0", "scale-90");
+          }, 10); // 10ms is enough
+        } else {
+          // --- Item should be HIDDEN ---
 
-					// 1. Start the "fade out" animation
-					htmlItem.classList.add("opacity-0", "scale-90");
+          // 1. Start the "fade out" animation
+          htmlItem.classList.add("opacity-0", "scale-90");
 
-					// 2. Wait for the animation to finish, THEN
-					//    hide it with 'display: none' to collapse the grid.
-					setTimeout(() => {
-						htmlItem.classList.add("hidden");
-					}, animationDuration);
-				}
-			});
-		});
-	});
+          // 2. Wait for the animation to finish, THEN
+          //    hide it with 'display: none' to collapse the grid.
+          setTimeout(() => {
+            htmlItem.classList.add("hidden");
+          }, animationDuration);
+        }
+      });
+    });
+  });
 </script>
