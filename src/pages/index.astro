@@ -1,9 +1,9 @@
 ---
 // src/pages/index.astro
-import Layout from '../layouts/Layout.astro';
-import { menuData } from '../data.js';
-import MenuItem from '../components/MenuItem.astro';
-import Gallery from '../components/Gallery.astro';
+import Layout from "../layouts/Layout.astro";
+import { menuData } from "../data.js";
+import MenuItem from "../components/MenuItem.astro";
+import Gallery from "../components/Gallery.astro";
 ---
 
 <Layout title="Kape Dadiangas - A Modern Coffee Experience">
@@ -21,8 +21,8 @@ import Gallery from '../components/Gallery.astro';
 				<p
 					class="mx-auto my-6 max-w-2xl text-xl text-light drop-shadow-md md:text-2xl"
 				>
-					Experience the rich aroma of locally-sourced beans in a space
-					that feels like home.
+					Experience the rich aroma of locally-sourced beans in a
+					space that feels like home.
 				</p>
 				<a
 					href="#menu"
@@ -50,18 +50,21 @@ import Gallery from '../components/Gallery.astro';
 					<h2 class="font-heading text-5xl text-white md:text-6xl">
 						Brewed in the Heart of GenSan
 					</h2>
-					<p class="my-4 font-body text-2xl text-primary">Our Story</p>
+					<p class="my-4 font-body text-2xl text-primary">
+						Our Story
+					</p>
 					<p class="mb-4 text-lg leading-relaxed">
-						Kape Dadiangas is more than a name; it's our promise. It’s a
-						tribute to the original spirit of our home, General Santos
-						City, and a nod to the simple, powerful ritual of a great cup
-						of coffee.
+						Kape Dadiangas is more than a name; it's our promise.
+						It’s a tribute to the original spirit of our home,
+						General Santos City, and a nod to the simple, powerful
+						ritual of a great cup of coffee.
 					</p>
 					<p class="text-lg leading-relaxed">
-						Our journey began with a dream: to create a warm, welcoming
-						space where the community could gather. We partner directly
-						with local farmers in SOCCSKSARGEN, ensuring that every sip
-						you take supports the hands that harvested it.
+						Our journey began with a dream: to create a warm,
+						welcoming space where the community could gather. We
+						partner directly with local farmers in SOCCSKSARGEN,
+						ensuring that every sip you take supports the hands that
+						harvested it.
 					</p>
 				</div>
 			</div>
@@ -78,7 +81,10 @@ import Gallery from '../components/Gallery.astro';
 					<p class="mt-2 font-body text-2xl text-primary">Our Menu</p>
 				</div>
 
-				<div id="menu-filters" class="my-8 flex flex-wrap justify-center gap-2">
+				<div
+					id="menu-filters"
+					class="my-8 flex flex-wrap justify-center gap-2"
+				>
 					<button
 						class="filter-btn rounded-full border-2 border-primary bg-primary px-6 py-2 text-dark transition-all duration-300"
 						data-filter="all">All</button
@@ -97,7 +103,10 @@ import Gallery from '../components/Gallery.astro';
 					>
 				</div>
 
-				<div id="menu-grid" class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+				<div
+					id="menu-grid"
+					class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
+				>
 					{menuData.map((item) => <MenuItem item={item} />)}
 				</div>
 			</div>
@@ -111,7 +120,9 @@ import Gallery from '../components/Gallery.astro';
 					<h2 class="font-heading text-5xl text-white md:text-6xl">
 						Moments at Kape Dadiangas
 					</h2>
-					<p class="mt-2 font-body text-2xl text-primary">Our Gallery</p>
+					<p class="mt-2 font-body text-2xl text-primary">
+						Our Gallery
+					</p>
 				</div>
 				<Gallery />
 			</div>
@@ -130,7 +141,9 @@ import Gallery from '../components/Gallery.astro';
 					</p>
 				</div>
 				<div class="grid grid-cols-1 gap-12 lg:grid-cols-2">
-					<div class="overflow-hidden rounded-lg border border-white/10">
+					<div
+						class="overflow-hidden rounded-lg border border-white/10"
+					>
 						<iframe
 							src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126912.65964893444!2d125.0747008432832!3d6.11544837508708!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x32f79f22f5c1df49%3A0x62e9314c61cb4611!2sGeneral%20Santos%20City%2C%20South%20Cotabato!5e0!3m2!1sen!2sph!4v1678888888888!5m2!1sen!2sph"
 							width="100%"
@@ -138,14 +151,16 @@ import Gallery from '../components/Gallery.astro';
 							style="border:0;"
 							allowfullscreen=""
 							loading="lazy"
-							referrerpolicy="no-referrer-when-downgrade"></iframe>
+							referrerpolicy="no-referrer-when-downgrade"
+						></iframe>
 					</div>
 					<div class="font-body text-lg">
 						<h3 class="mb-4 font-heading text-3xl text-white">
 							Our Home
 						</h3>
 						<p class="flex items-start">
-							<i class="bi bi-geo-alt-fill mr-4 pt-1 text-xl text-primary"
+							<i
+								class="bi bi-geo-alt-fill mr-4 pt-1 text-xl text-primary"
 							></i>
 							<span>
 								Pioneer Avenue, Brgy. Dadiangas East<br />
@@ -177,7 +192,8 @@ import Gallery from '../components/Gallery.astro';
 							Get in Touch
 						</h4>
 						<p class="mt-4 flex items-center">
-							<i class="bi bi-telephone-fill mr-4 text-xl text-primary"
+							<i
+								class="bi bi-telephone-fill mr-4 text-xl text-primary"
 							></i>
 							<span>(083) 555-1234</span>
 						</p>
@@ -189,51 +205,52 @@ import Gallery from '../components/Gallery.astro';
 </Layout>
 
 <script>
-	const filterButtons = document.querySelectorAll('.filter-btn');
-	const menuItems = document.querySelectorAll('.menu-item');
+	const filterButtons = document.querySelectorAll(".filter-btn");
+	const menuItems = document.querySelectorAll(".menu-item");
 
 	// This should match your transition duration from MenuItem.astro (300ms)
 	const animationDuration = 300;
 
 	filterButtons.forEach((button) => {
-		button.addEventListener('click', () => {
+		button.addEventListener("click", () => {
 			const htmlButton = button as HTMLElement;
 			const filter = htmlButton.dataset.filter;
 
 			// Set active class styling
 			filterButtons.forEach((btn) => {
-				btn.classList.add('bg-transparent', 'text-primary');
-				btn.classList.remove('bg-primary', 'text-dark');
+				btn.classList.add("bg-transparent", "text-primary");
+				btn.classList.remove("bg-primary", "text-dark");
 			});
-			htmlButton.classList.remove('bg-transparent', 'text-primary');
-			htmlButton.classList.add('bg-primary', 'text-dark');
+			htmlButton.classList.remove("bg-transparent", "text-primary");
+			htmlButton.classList.add("bg-primary", "text-dark");
 
 			// Show/hide menu items
 			menuItems.forEach((item) => {
 				const htmlItem = item as HTMLElement;
-				const isMatch = filter === 'all' || htmlItem.dataset.category === filter;
+				const isMatch =
+					filter === "all" || htmlItem.dataset.category === filter;
 
 				if (isMatch) {
 					// --- Item should be SHOWN ---
 
 					// 1. Remove 'hidden' to make it part of the layout
-					htmlItem.classList.remove('hidden');
+					htmlItem.classList.remove("hidden");
 
 					// 2. Wait for a tiny moment (a "tick") for the browser
 					//    to register the display change, then start the animation.
 					setTimeout(() => {
-						htmlItem.classList.remove('opacity-0', 'scale-90');
+						htmlItem.classList.remove("opacity-0", "scale-90");
 					}, 10); // 10ms is enough
 				} else {
 					// --- Item should be HIDDEN ---
 
 					// 1. Start the "fade out" animation
-					htmlItem.classList.add('opacity-0', 'scale-90');
+					htmlItem.classList.add("opacity-0", "scale-90");
 
 					// 2. Wait for the animation to finish, THEN
 					//    hide it with 'display: none' to collapse the grid.
 					setTimeout(() => {
-						htmlItem.classList.add('hidden');
+						htmlItem.classList.add("hidden");
 					}, animationDuration);
 				}
 			});
