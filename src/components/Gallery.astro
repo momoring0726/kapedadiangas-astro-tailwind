@@ -1,8 +1,9 @@
 ---
 // src/components/Gallery.astro
-import { galleryData } from '../data.js';
+import { galleryData } from '../data.js'; // [cite: momoring0726/kapedadiangas-astro-tailwind/kapedadiangas-astro-tailwind-085111ccb737fbaaba88e1e99fcb92fd267dfea8/src/data.js]
 ---
 
+<!-- 1. The Gallery Grid -->
 <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
 	{
 		galleryData.map((item) => (
@@ -14,7 +15,7 @@ import { galleryData } from '../data.js';
 				<img
 					src={item.src}
 					alt={item.alt}
-					class="img-fluid"
+					class="w-full h-auto"
 					loading="lazy"
 				/>
 			</a>
@@ -22,27 +23,45 @@ import { galleryData } from '../data.js';
 	}
 </div>
 
+<!--
+  2. The Modal (FIXED)
+  The outer div is the backdrop (flex, items-center, justify-center).
+-->
 <div
 	id="galleryModal"
-	class="fixed inset-0 z-[100] flex hidden items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
+	class="fixed inset-0 z-50 flex hidden items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
+	aria-hidden="true"
 >
-	<div class="relative max-h-full max-w-4xl">
+	<!--
+    THE FIX:
+    - 'relative' is for positioning the close button.
+    - 'inline-block' is the key. It forces this div
+      to "shrink-wrap" to the size of the image inside it,
+      which finally eliminates the "black space" bug.
+  -->
+	<div class="relative inline-block">
+		<!--
+      - 'max-h-[90vh]' constrains the image to 90% of the viewport height.
+      - 'max-w-[90vw]' constrains the image to 90% of the viewport width.
+    -->
 		<img
 			id="modalImage"
 			src=""
 			alt="Gallery Image Preview"
-			class="h-auto max-h-[90vh] w-full rounded-lg"
+			class="block h-auto w-auto max-h-[90vh] max-w-[90vw] rounded-lg"
 		/>
+		<!-- Close Button -->
+		<button
+			id="modalClose"
+			type="button"
+			class="absolute -right-2 -top-2 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-black/70 text-2xl font-bold leading-none text-white opacity-80 transition-all hover:opacity-100"
+		>
+			×
+		</button>
 	</div>
-	<button
-		id="modalClose"
-		type="button"
-		class="absolute right-6 top-6 z-[110] text-3xl font-bold text-white opacity-80 transition-opacity hover:opacity-100"
-	>
-		×
-	</button>
 </div>
 
+<!-- 3. The Client-Side Script (with TypeScript fixes) -->
 <script>
 	const modal = document.getElementById('galleryModal');
 	const modalImage = document.getElementById('modalImage') as HTMLImageElement;
@@ -61,16 +80,24 @@ import { galleryData } from '../data.js';
 	const thumbnails = document.querySelectorAll('.gallery-thumbnail');
 	thumbnails.forEach((thumb) => {
 		thumb.addEventListener('click', (event) => {
-			event.preventDefault();
+			event.preventDefault(); // This stops the link from being followed
 			const imgSrc = thumb.getAttribute('data-img-src');
 			if (imgSrc) openModal(imgSrc);
 		});
 	});
 
-	if (modalClose) modalClose.addEventListener('click', closeModal);
+	if (modalClose) {
+		modalClose.addEventListener('click', closeModal);
+	}
+
 	if (modal) {
 		modal.addEventListener('click', (event) => {
-			if (event.target === modal) closeModal();
+			// This closes the modal if you click on the backdrop (the modal itself)
+			// but not if you click on the image or wrapper (event.target === modal)
+			if (event.target === modal) {
+				closeModal();
+			}
 		});
 	}
 </script>
+
