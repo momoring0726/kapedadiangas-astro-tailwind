@@ -189,27 +189,52 @@ import Gallery from '../components/Gallery.astro';
 </Layout>
 
 <script>
-	const filterButtons = document.querySelectorAll<HTMLElement>('.filter-btn');
-	const menuItems = document.querySelectorAll<HTMLElement>('.menu-item');
+	const filterButtons = document.querySelectorAll('.filter-btn');
+	const menuItems = document.querySelectorAll('.menu-item');
+
+	// This should match your transition duration from MenuItem.astro (300ms)
+	const animationDuration = 300;
 
 	filterButtons.forEach((button) => {
 		button.addEventListener('click', () => {
+			const htmlButton = button as HTMLElement;
+			const filter = htmlButton.dataset.filter;
+
 			// Set active class styling
 			filterButtons.forEach((btn) => {
 				btn.classList.add('bg-transparent', 'text-primary');
 				btn.classList.remove('bg-primary', 'text-dark');
 			});
-			button.classList.remove('bg-transparent', 'text-primary');
-			button.classList.add('bg-primary', 'text-dark');
-
-			const filter = button.dataset.filter;
+			htmlButton.classList.remove('bg-transparent', 'text-primary');
+			htmlButton.classList.add('bg-primary', 'text-dark');
 
 			// Show/hide menu items
 			menuItems.forEach((item) => {
-				if (filter === 'all' || item.dataset.category === filter) {
-					item.classList.remove('hidden');
+				const htmlItem = item as HTMLElement;
+				const isMatch = filter === 'all' || htmlItem.dataset.category === filter;
+
+				if (isMatch) {
+					// --- Item should be SHOWN ---
+
+					// 1. Remove 'hidden' to make it part of the layout
+					htmlItem.classList.remove('hidden');
+
+					// 2. Wait for a tiny moment (a "tick") for the browser
+					//    to register the display change, then start the animation.
+					setTimeout(() => {
+						htmlItem.classList.remove('opacity-0', 'scale-90');
+					}, 10); // 10ms is enough
 				} else {
-					item.classList.add('hidden');
+					// --- Item should be HIDDEN ---
+
+					// 1. Start the "fade out" animation
+					htmlItem.classList.add('opacity-0', 'scale-90');
+
+					// 2. Wait for the animation to finish, THEN
+					//    hide it with 'display: none' to collapse the grid.
+					setTimeout(() => {
+						htmlItem.classList.add('hidden');
+					}, animationDuration);
 				}
 			});
 		});

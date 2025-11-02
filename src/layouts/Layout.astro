@@ -41,14 +41,54 @@ const { title } = Astro.props;
 		>
 			<div class="container mx-auto flex items-center justify-between px-4">
 				<a href="#" class="font-heading text-3xl">Kape Dadiangas</a>
+
 				<button
-					class="navbar-toggler lg:hidden"
+					id="navbar-toggler-button"
+					class="navbar-toggler z-50 text-3xl lg:hidden"
 					type="button"
 					aria-label="Toggle navigation"
 				>
-					<span class="navbar-toggler-icon"></span>
+					<i id="navbar-icon-open" class="bi bi-list"></i>
+					<i id="navbar-icon-close" class="bi bi-x hidden"></i>
 				</button>
+
 				<ul class="hidden gap-6 lg:flex">
+					<li>
+						<a
+							href="#about"
+							class="text-lg font-medium text-white/90 transition-colors hover:text-primary"
+							>About</a
+						>
+					</li>
+					<li>
+						<a
+							href="#menu"
+							class="text-lg font-medium text-white/90 transition-colors hover:text-primary"
+							>Menu</a
+						>
+					</li>
+					<li>
+						<a
+							href="#gallery"
+							class="text-lg font-medium text-white/90 transition-colors hover:text-primary"
+							>Gallery</a
+						>
+					</li>
+					<li>
+						<a
+							href="#contact"
+							class="text-lg font-medium text-white/90 transition-colors hover:text-primary"
+							>Contact</a
+						>
+					</li>
+				</ul>
+			</div>
+
+			<div
+				id="mobile-menu"
+				class="hidden w-full bg-gray-900/80 backdrop-blur-md lg:hidden"
+			>
+				<ul class="flex flex-col items-center gap-4 py-4">
 					<li>
 						<a
 							href="#about"
@@ -105,8 +145,7 @@ const { title } = Astro.props;
 						><i class="bi bi-twitter-x"></i></a
 					>
 				</div>
-				<p class="mb-0">© 2025 Mark Wyndl Tan 
-Divinagracia. All Rights Reserved.</p>
+				<p class="mb-0">© 2025 Mark Wyndl Tan Divinagracia. All Rights Reserved.</p>
 				<p class="mb-0">This is a demo site for portfolio purposes only.</p>
 			</div>
 		</footer>
@@ -136,7 +175,7 @@ Divinagracia. All Rights Reserved.</p>
 		<script>
 			// 1. Navbar style change on scroll
 			const navbar = document.getElementById('navbar');
-if (navbar) {
+			if (navbar) {
 				window.addEventListener('scroll', () => {
 					if (window.scrollY > 50) {
 						// This replaces the .scrolled class
@@ -145,7 +184,7 @@ if (navbar) {
 						navbar.classList.remove('bg-gray-900/80', 'shadow-lg', 'backdrop-blur-md');
 					}
 				});
-}
+			}
 
 			// 2. Fade-in animation on scroll
 			const observer = new IntersectionObserver(
@@ -160,12 +199,40 @@ if (navbar) {
 					threshold: 0.1,
 				}
 			);
-const sectionsToFade = document.querySelectorAll('.fade-in-section');
+			const sectionsToFade = document.querySelectorAll('.fade-in-section');
 			sectionsToFade.forEach((section) => {
 				observer.observe(section);
 			});
 
-			// 3. Gallery Modal Logic (TypeScript-safe)
+			// 3. Mobile Menu Toggle
+			const toggleButton = document.getElementById('navbar-toggler-button');
+			const mobileMenu = document.getElementById('mobile-menu') as HTMLElement | null;
+			const openIcon = document.getElementById('navbar-icon-open');
+			const closeIcon = document.getElementById('navbar-icon-close');
+			const mobileLinks = mobileMenu?.querySelectorAll('a');
+
+			// Function to close the menu
+			function closeMobileMenu() {
+				mobileMenu?.classList.add('hidden');
+				openIcon?.classList.remove('hidden');
+				closeIcon?.classList.add('hidden');
+			}
+
+			if (toggleButton && mobileMenu && openIcon && closeIcon) {
+				// Toggle menu on button click
+				toggleButton.addEventListener('click', () => {
+					mobileMenu.classList.toggle('hidden');
+					openIcon.classList.toggle('hidden');
+					closeIcon.classList.toggle('hidden');
+				});
+
+				// Close menu when a link is clicked
+				mobileLinks?.forEach((link) => {
+					link.addEventListener('click', closeMobileMenu);
+				});
+			}
+
+			// 4. Gallery Modal Logic (TypeScript-safe)
 			const modal = document.getElementById('gallery-modal') as HTMLElement | null;
 			const modalImg = modal?.querySelector('.modal-img') as HTMLImageElement | null;
 			const modalCaption = modal?.querySelector('#modal-caption') as HTMLElement | null;
@@ -188,7 +255,6 @@ const sectionsToFade = document.querySelectorAll('.fade-in-section');
 						modalCaption.textContent = imgAlt;
 					});
 				});
-
 				// Function to close the modal
 				function closeModal() {
 					if (modal && modalImg && modalCaption) {
@@ -200,7 +266,6 @@ const sectionsToFade = document.querySelectorAll('.fade-in-section');
 
 				// Add click event to close button
 				closeBtn.addEventListener('click', closeModal);
-
 				// Add click event to modal overlay (to close when clicking outside the content)
 				modal.addEventListener('click', (e) => {
 					if (e.target === modal) {
@@ -216,7 +281,7 @@ const sectionsToFade = document.querySelectorAll('.fade-in-section');
 				transition:
 					opacity 0.6s ease-out,
 					transform 0.6s ease-out;
-}
+			}
 			.fade-in-section.is-visible {
 				opacity: 1;
 				transform: translateY(0);
@@ -225,14 +290,15 @@ const sectionsToFade = document.querySelectorAll('.fade-in-section');
 			/* ========= START: MODAL STYLES ========= */
 			.modal-overlay {
 				display: none; /* Hidden by default */
-				position: fixed; /* Stay in place */
+				position: fixed;
+				/* Stay in place */
 				z-index: 1000; /* Sit on top */
 				left: 0;
 				top: 0;
 				width: 100%;
 				height: 100%;
-				overflow: auto; /* Enable scroll if needed */
-				background-color: rgba(0, 0, 0, 0.9); /* Black w/ opacity */
+				overflow: auto;
+				background-color: rgba(0, 0, 0, 0.9);
 				/* Use flex to center the content box */
 				align-items: center;
 				justify-content: center;
@@ -249,8 +315,8 @@ const sectionsToFade = document.querySelectorAll('.fade-in-section');
 				border: 2px solid var(--color-primary, #c5a880);
 				border-radius: 8px;
 				width: auto;
-				max-width: 900px; /* Adjust this to make the box wider or narrower */
-				max-height: 90vh; /* Max height for the modal box */
+				max-width: 900px;
+				max-height: 90vh;
 				overflow-y: auto; /* Add scroll if content is too tall */
 				text-align: center;
 				box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
@@ -258,7 +324,8 @@ const sectionsToFade = document.querySelectorAll('.fade-in-section');
 
 			.modal-img {
 				display: block;
-				width: 100%; /* Image takes full width of modal-content */
+				width: 100%;
+				/* Image takes full width of modal-content */
 				height: auto;
 				max-height: 75vh; /* Constrain image height */
 				object-fit: contain;
@@ -269,7 +336,7 @@ const sectionsToFade = document.querySelectorAll('.fade-in-section');
 			/* Modern Close Button (Overlay Position) */
 			.modal-close {
 				position: absolute;
-				top: 2rem; /* 32px from top of viewport */
+				top: 2rem;
 				right: 2rem; /* 32px from right of viewport */
 				background: none;
 				border: none;
@@ -279,13 +346,15 @@ const sectionsToFade = document.querySelectorAll('.fade-in-section');
 				transition:
 					color 0.2s ease-in-out,
 					transform 0.2s ease-in-out;
-				z-index: 1010; /* Ensure it's above all modal content */
+				z-index: 1010;
+				/* Ensure it's above all modal content */
 				line-height: 1;
 			}
 
 			.modal-close:hover {
 				color: var(--color-primary, #c5a880); /* Glows with primary color */
-				transform: scale(1.1); /* Slight zoom on hover */
+				transform: scale(1.1);
+				/* Slight zoom on hover */
 			}
 
 			.modal-caption {
