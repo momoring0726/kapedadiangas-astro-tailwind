@@ -1,25 +1,30 @@
 ---
 // src/components/MenuItem.astro
 import { Image } from "astro:assets";
-// We remove the 'ImageMetadata' type import, as it's causing editor-level errors.
 
 export interface Props {
   item: {
     name: string;
     price: string;
     description: string;
-    image: any; // CHANGED: from ImageMetadata to `any` to fix the error
+    image: any;
     alt: string;
     category: string;
   };
+  // We add this to allow any other HTML attributes (like transition:name)
+  [key: string]: any;
 }
 
-const { item } = Astro.props;
+// 1. Destructure 'item' and capture all other props (like transition:name)
+//    into a new 'rest' object.
+const { item, ...rest } = Astro.props;
 ---
 
 <div
-  class="menu-item flex h-full flex-col overflow-hidden rounded-lg border border-white/10 bg-gray-900/70 shadow-lg transition-all duration-300 ease-in-out hover:-translate-y-2 hover:shadow-black/30"
+  class="menu-item flex h-full flex-col overflow-hidden rounded-lg border border-white/10 bg-gray-900/70 shadow-lg
+         transition-[transform,opacity] duration-300 ease-out hover:-translate-y-2 hover:shadow-black/30"
   data-category={item.category}
+  {...rest}
 >
   <Image
     src={item.image}

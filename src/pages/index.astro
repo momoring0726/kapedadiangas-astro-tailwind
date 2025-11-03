@@ -6,6 +6,25 @@ import { menuData } from "../data.js";
 import MenuItem from "../components/MenuItem.astro";
 import Gallery from "../components/Gallery.astro";
 import ourStoryImg from "../assets/img/About/Our Story.png";
+
+// Get the category from the URL
+const category = Astro.url.searchParams.get("category");
+
+// Filter the menu data
+const filteredMenu = menuData.filter(
+  (item) => !category || category === "all" || item.category === category
+);
+
+// Helper function for active link styling
+function getFilterClasses(filter: string) {
+  const isActive = (category || "all") === filter;
+  const base =
+    "filter-btn rounded-full border-2 border-primary px-6 py-2 transition-all duration-300";
+  if (isActive) {
+    return `${base} bg-primary text-dark`;
+  }
+  return `${base} bg-transparent text-primary hover:bg-primary hover:text-dark`;
+}
 ---
 
 <Layout title="Kape Dadiangas - A Modern Coffee Experience">
@@ -49,7 +68,6 @@ import ourStoryImg from "../assets/img/About/Our Story.png";
             alt="Our Story"
           />
         </div>
-
         <div>
           <h2 class="font-heading text-5xl text-white md:text-6xl">
             Brewed in the Heart of GenSan
@@ -82,21 +100,16 @@ import ourStoryImg from "../assets/img/About/Our Story.png";
         </div>
 
         <div id="menu-filters" class="my-8 flex flex-wrap justify-center gap-2">
-          <button
-            class="filter-btn rounded-full border-2 border-primary bg-primary px-6 py-2 text-dark transition-all duration-300"
-            data-filter="all">All</button
+          <a href="/#menu" class={getFilterClasses("all")}>All</a>
+          <a href="/?category=hot#menu" class={getFilterClasses("hot")}
+            >Hot Coffee</a
           >
-          <button
-            class="filter-btn rounded-full border-2 border-primary bg-transparent px-6 py-2 text-primary transition-all duration-300 hover:bg-primary hover:text-dark"
-            data-filter="hot">Hot Coffee</button
+          <a href="/?category=iced#menu" class={getFilterClasses("iced")}
+            >Iced Coffee</a
           >
-          <button
-            class="filter-btn rounded-full border-2 border-primary bg-transparent px-6 py-2 text-primary transition-all duration-300 hover:bg-primary hover:text-dark"
-            data-filter="iced">Iced Coffee</button
-          >
-          <button
-            class="filter-btn rounded-full border-2 border-primary bg-transparent px-6 py-2 text-primary transition-all duration-300 hover:bg-primary hover:text-dark"
-            data-filter="pastries">Pastries</button
+          <a
+            href="/?category=pastries#menu"
+            class={getFilterClasses("pastries")}>Pastries</a
           >
         </div>
 
@@ -104,7 +117,15 @@ import ourStoryImg from "../assets/img/About/Our Story.png";
           id="menu-grid"
           class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
         >
-          {menuData.map((item) => <MenuItem item={item} />)}
+          {
+            filteredMenu.map((item) => (
+              <MenuItem
+                item={item}
+                transition:name={`menu-${item.name}`}
+                transition:animate="fade"
+              />
+            ))
+          }
         </div>
       </div>
     </div>
@@ -146,7 +167,7 @@ import ourStoryImg from "../assets/img/About/Our Story.png";
             <h3 class="mb-4 font-heading text-3xl text-white">Our Home</h3>
             <p class="flex items-start">
               <i
-                class="fas fa-map-marker-alt mr-4 w-6 flex-shrink-0 pt-1 text-xl text-primary text-center"
+                class="fas fa-map-marker-alt mr-4 w-6 shrink-0 pt-1 text-xl text-primary text-center"
               ></i>
               <span>
                 Pioneer Avenue, Brgy. Dadiangas East<br />
@@ -183,55 +204,3 @@ import ourStoryImg from "../assets/img/About/Our Story.png";
     </div>
   </section>
 </Layout>
-
-<script>
-  const filterButtons = document.querySelectorAll(".filter-btn");
-  const menuItems = document.querySelectorAll(".menu-item");
-
-  // This should match your transition duration from MenuItem.astro (300ms)
-  const animationDuration = 300;
-  filterButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const htmlButton = button as HTMLElement;
-      const filter = htmlButton.dataset.filter;
-
-      // Set active class styling
-      filterButtons.forEach((btn) => {
-        btn.classList.add("bg-transparent", "text-primary");
-        btn.classList.remove("bg-primary", "text-dark");
-      });
-      htmlButton.classList.remove("bg-transparent", "text-primary");
-      htmlButton.classList.add("bg-primary", "text-dark");
-
-      // Show/hide menu items
-      menuItems.forEach((item) => {
-        const htmlItem = item as HTMLElement;
-        const isMatch =
-          filter === "all" || htmlItem.dataset.category === filter;
-
-        if (isMatch) {
-          // --- Item should be SHOWN ---
-
-          // 1. Remove 'hidden' to make it part of the layout
-          htmlItem.classList.remove("hidden");
-
-          // 2. Wait for a tiny moment (a "tick") for the browser
-          //    to register the display change, then start the animation.
-          setTimeout(() => {
-            htmlItem.classList.remove("opacity-0", "scale-90");
-          }, 10); // 10ms is enough
-        } else {
-          // --- Item should be HIDDEN ---
-
-          // 1. Start the "fade out" animation
-          htmlItem.classList.add("opacity-0", "scale-90");
-          // 2. Wait for the animation to finish, THEN
-          //    hide it with 'display: none' to collapse the grid.
-          setTimeout(() => {
-            htmlItem.classList.add("hidden");
-          }, animationDuration);
-        }
-      });
-    });
-  });
-</script>
