@@ -7,17 +7,11 @@ import MenuItem from "../components/MenuItem.astro";
 import Gallery from "../components/Gallery.astro";
 import ourStoryImg from "../assets/img/About/Our Story.png";
 
-// Get the category from the URL
-const category = Astro.url.searchParams.get("category");
-
-// Filter the menu data
-const filteredMenu = menuData.filter(
-  (item) => !category || category === "all" || item.category === category
-);
+// Server-side filtering logic is removed.
 
 // Helper function for active link styling
 function getFilterClasses(filter: string) {
-  const isActive = (category || "all") === filter;
+  const isActive = "all" === filter; // Default to 'all' being active on load
   const base =
     "filter-btn rounded-full border-2 border-primary px-6 py-2 transition-all duration-300";
   if (isActive) {
@@ -96,20 +90,20 @@ function getFilterClasses(filter: string) {
           <h2 class="font-heading text-5xl text-white md:text-6xl">
             Handcrafted With Pride
           </h2>
-          <p class="mt-2 font-body text-2xl text-primary">Our Menu</p>
+          <p class="mt-2
+font-body text-2xl text-primary">Our Menu</p>
         </div>
 
         <div id="menu-filters" class="my-8 flex flex-wrap justify-center gap-2">
-          <a href="/#menu" class={getFilterClasses("all")}>All</a>
-          <a href="/?category=hot#menu" class={getFilterClasses("hot")}
-            >Hot Coffee</a
+          <button data-filter="all" class={getFilterClasses("all")}>All</button>
+          <button data-filter="hot" class={getFilterClasses("hot")}
+            >Hot Coffee</button
           >
-          <a href="/?category=iced#menu" class={getFilterClasses("iced")}
-            >Iced Coffee</a
+          <button data-filter="iced" class={getFilterClasses("iced")}
+            >Iced Coffee</button
           >
-          <a
-            href="/?category=pastries#menu"
-            class={getFilterClasses("pastries")}>Pastries</a
+          <button data-filter="pastries" class={getFilterClasses("pastries")}
+            >Pastries</button
           >
         </div>
 
@@ -118,7 +112,7 @@ function getFilterClasses(filter: string) {
           class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
         >
           {
-            filteredMenu.map((item) => (
+            menuData.map((item) => (
               <MenuItem
                 item={item}
                 transition:name={`menu-${item.name}`}
@@ -204,3 +198,61 @@ function getFilterClasses(filter: string) {
     </div>
   </section>
 </Layout>
+
+<script>
+  // 5. Menu Filter Logic
+  const filterButtons = document.querySelectorAll<HTMLButtonElement>(
+    "#menu-filters .filter-btn"
+  );
+  const menuItems = document.querySelectorAll<HTMLElement>(".menu-item");
+  const menuGrid = document.getElementById("menu-grid");
+
+  // Store the original 'transition:name' to re-apply it
+  // This ensures View Transitions still work when you navigate *away* from the page
+  menuItems.forEach((item) => {
+    item.dataset.transitionName = item.style.viewTransitionName;
+  });
+
+  filterButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      // NO UNDERSCORE
+      const filter = button.dataset.filter;
+
+      // Update button active state
+      filterButtons.forEach((btn) => {
+        const isActive = btn.dataset.filter === filter;
+        btn.classList.toggle("bg-primary", isActive);
+        btn.classList.toggle("text-dark", isActive);
+        btn.classList.toggle("bg-transparent", !isActive);
+        btn.classList.toggle("text-primary", !isActive);
+      });
+
+      // --- This is the key part ---
+      // 1. Temporarily disable View Transitions on the items
+      menuItems.forEach((item) => {
+        item.style.viewTransitionName = "none";
+      });
+
+      // 2. Filter items
+      menuItems.forEach((item) => {
+        const itemCategory = item.dataset.category;
+        const shouldShow = filter === "all" || itemCategory === filter;
+
+        if (shouldShow) {
+          item.style.display = "flex"; // Show
+        } else {
+          item.style.display = "none"; // Hide
+        }
+      });
+
+      // 3. Re-enable View Transitions after a tiny delay
+      // This ensures transitions are ready for the *next* page navigation
+      setTimeout(() => {
+        // NO UNDERSCORE
+        menuItems.forEach((item) => {
+          item.style.viewTransitionName = item.dataset.transitionName || "";
+        });
+      }, 50);
+    });
+  });
+</script>
