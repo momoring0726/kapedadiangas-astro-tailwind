@@ -1,33 +1,40 @@
 ---
 // src/components/MenuItem.astro
+import { Image } from "astro:assets";
+// We remove the 'ImageMetadata' type import, as it's causing editor-level errors.
+
 export interface Props {
-	item: {
-		name: string;
-		price: string;
-		description: string;
-		image: string;
-		alt: string;
-		category: string;
-	};
+  item: {
+    name: string;
+    price: string;
+    description: string;
+    image: any; // CHANGED: from ImageMetadata to `any` to fix the error
+    alt: string;
+    category: string;
+  };
 }
 
 const { item } = Astro.props;
 ---
 
 <div
-	class="menu-item flex h-full flex-col overflow-hidden rounded-lg border border-white/10 bg-gray-900/70 shadow-lg transition-all duration-300 ease-in-out hover:-translate-y-2 hover:shadow-black/30"
-	data-category={item.category}
+  class="menu-item flex h-full flex-col overflow-hidden rounded-lg border border-white/10 bg-gray-900/70 shadow-lg transition-all duration-300 ease-in-out hover:-translate-y-2 hover:shadow-black/30"
+  data-category={item.category}
 >
-	<img
-		src={item.image}
-		alt={item.alt}
-		class="h-[250px] w-full object-cover"
-	/>
-	<div class="flex h-full flex-col p-6">
-		<div class="flex items-center justify-between">
-			<h4 class="font-heading text-2xl text-primary">{item.name}</h4>
-			<p class="font-heading text-2xl font-bold text-primary">{item.price}</p>
-		</div>
-		<p class="mt-2 flex-grow text-light/90">{item.description}</p>
-	</div>
+  <Image
+    src={item.image}
+    alt={item.alt}
+    width={400}
+    height={250}
+    format="webp"
+    quality={80}
+    class="h-[250px] w-full object-cover"
+  />
+  <div class="flex h-full flex-col p-6">
+    <div class="flex items-center justify-between">
+      <h4 class="font-heading text-2xl text-primary">{item.name}</h4>
+      <p class="font-heading text-2xl font-bold text-primary">{item.price}</p>
+    </div>
+    <p class="mt-2 grow text-light/90">{item.description}</p>
+  </div>
 </div>

@@ -1,9 +1,11 @@
 ---
 // src/pages/index.astro
+import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import { menuData } from "../data.js";
 import MenuItem from "../components/MenuItem.astro";
 import Gallery from "../components/Gallery.astro";
+import ourStoryImg from "../assets/img/About/Our Story.png";
 ---
 
 <Layout title="Kape Dadiangas - A Modern Coffee Experience">
@@ -38,12 +40,16 @@ import Gallery from "../components/Gallery.astro";
         class="fade-in-section grid grid-cols-1 items-center gap-12 lg:grid-cols-2"
       >
         <div>
-          <img
-            src="/img/About/Our Story.png"
+          <Image
+            src={ourStoryImg}
+            width={700}
+            format="webp"
+            quality={85}
             class="img-fluid rounded-lg shadow-lg"
             alt="Our Story"
           />
         </div>
+
         <div>
           <h2 class="font-heading text-5xl text-white md:text-6xl">
             Brewed in the Heart of GenSan
@@ -139,7 +145,9 @@ import Gallery from "../components/Gallery.astro";
           <div class="font-body text-lg">
             <h3 class="mb-4 font-heading text-3xl text-white">Our Home</h3>
             <p class="flex items-start">
-              <i class="bi bi-geo-alt-fill mr-4 pt-1 text-xl text-primary"></i>
+              <i
+                class="fas fa-map-marker-alt mr-4 w-6 flex-shrink-0 pt-1 text-xl text-primary text-center"
+              ></i>
               <span>
                 Pioneer Avenue, Brgy. Dadiangas East<br />
                 General Santos City, 9500
@@ -166,7 +174,7 @@ import Gallery from "../components/Gallery.astro";
             </ul>
             <h4 class="mt-8 font-heading text-2xl text-white">Get in Touch</h4>
             <p class="mt-4 flex items-center">
-              <i class="bi bi-telephone-fill mr-4 text-xl text-primary"></i>
+              <i class="fas fa-phone mr-4 w-5 text-xl text-primary"></i>
               <span>(083) 555-1234</span>
             </p>
           </div>
@@ -182,7 +190,6 @@ import Gallery from "../components/Gallery.astro";
 
   // This should match your transition duration from MenuItem.astro (300ms)
   const animationDuration = 300;
-
   filterButtons.forEach((button) => {
     button.addEventListener("click", () => {
       const htmlButton = button as HTMLElement;
@@ -218,7 +225,6 @@ import Gallery from "../components/Gallery.astro";
 
           // 1. Start the "fade out" animation
           htmlItem.classList.add("opacity-0", "scale-90");
-
           // 2. Wait for the animation to finish, THEN
           //    hide it with 'display: none' to collapse the grid.
           setTimeout(() => {

@@ -1,5 +1,6 @@
 ---
 // src/components/Gallery.astro
+import { Image } from "astro:assets";
 import { galleryData } from "../data.js";
 ---
 
@@ -7,13 +8,17 @@ import { galleryData } from "../data.js";
   {
     galleryData.map((item) => (
       <a
-        href={item.src}
+        href={item.src.src}
         data-alt={item.alt}
         class="gallery-item group block overflow-hidden rounded-lg shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
       >
-        <img
+        <Image
           src={item.src}
           alt={item.alt}
+          width={600}
+          height={400}
+          format="webp"
+          quality={80}
           class="h-auto w-full transform transition-transform duration-300 group-hover:scale-105"
           loading="lazy"
         />
