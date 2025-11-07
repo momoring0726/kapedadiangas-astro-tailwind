@@ -129,7 +129,6 @@ function getFilterClasses(filter: string) {
           class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
         >
           {
-            // --- START: UPDATED MAP (using filtered data) ---
             filteredMenuData.map((item) => (
               <MenuItem
                 item={item}
@@ -137,7 +136,6 @@ function getFilterClasses(filter: string) {
                 transition:animate="fade"
               />
             ))
-            // --- END: UPDATED MAP ---
           }
         </div>
       </div>
