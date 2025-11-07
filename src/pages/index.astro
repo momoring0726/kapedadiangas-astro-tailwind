@@ -7,11 +7,21 @@ import MenuItem from "../components/MenuItem.astro";
 import Gallery from "../components/Gallery.astro";
 import ourStoryImg from "../assets/img/About/Our Story.png";
 
-// Server-side filtering logic is removed.
+// --- START: NEW SERVER-SIDE FILTER LOGIC ---
+// 1. Get the active filter from the URL. Default to 'all'.
+const activeFilter = Astro.url.searchParams.get("filter") || "all";
 
-// Helper function for active link styling
+// 2. Create a new, filtered array
+const filteredMenuData = menuData.filter((item) => {
+  if (activeFilter === "all") {
+    return true; // Show all items
+  }
+  return item.category === activeFilter; // Show only matching items
+});
+
+// 3. Update the helper function to read from our activeFilter variable
 function getFilterClasses(filter: string) {
-  const isActive = "all" === filter; // Default to 'all' being active on load
+  const isActive = activeFilter === filter; // Check against the URL param
   const base =
     "filter-btn rounded-full border-2 border-primary px-6 py-2 transition-all duration-300";
   if (isActive) {
@@ -19,6 +29,7 @@ function getFilterClasses(filter: string) {
   }
   return `${base} bg-transparent text-primary hover:bg-primary hover:text-dark`;
 }
+// --- END: NEW SERVER-SIDE FILTER LOGIC ---
 ---
 
 <Layout title="Kape Dadiangas - A Modern Coffee Experience">
@@ -90,35 +101,43 @@ function getFilterClasses(filter: string) {
           <h2 class="font-heading text-5xl text-white md:text-6xl">
             Handcrafted With Pride
           </h2>
-          <p class="mt-2
-font-body text-2xl text-primary">Our Menu</p>
+          <p class="mt-2 font-body text-2xl text-primary">Our Menu</p>
         </div>
 
         <div id="menu-filters" class="my-8 flex flex-wrap justify-center gap-2">
-          <button data-filter="all" class={getFilterClasses("all")}>All</button>
-          <button data-filter="hot" class={getFilterClasses("hot")}
-            >Hot Coffee</button
+          <a href="#menu" data-filter="all" class={getFilterClasses("all")}
+            >All</a
           >
-          <button data-filter="iced" class={getFilterClasses("iced")}
-            >Iced Coffee</button
+          <a
+            href="?filter=hot#menu"
+            data-filter="hot"
+            class={getFilterClasses("hot")}>Hot Coffee</a
           >
-          <button data-filter="pastries" class={getFilterClasses("pastries")}
-            >Pastries</button
+          <a
+            href="?filter=iced#menu"
+            data-filter="iced"
+            class={getFilterClasses("iced")}>Iced Coffee</a
+          >
+          <a
+            href="?filter=pastries#menu"
+            data-filter="pastries"
+            class={getFilterClasses("pastries")}>Pastries</a
           >
         </div>
-
         <div
           id="menu-grid"
           class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
         >
           {
-            menuData.map((item) => (
+            // --- START: UPDATED MAP (using filtered data) ---
+            filteredMenuData.map((item) => (
               <MenuItem
                 item={item}
                 transition:name={`menu-${item.name}`}
                 transition:animate="fade"
               />
             ))
+            // --- END: UPDATED MAP ---
           }
         </div>
       </div>
@@ -198,61 +217,3 @@ font-body text-2xl text-primary">Our Menu</p>
     </div>
   </section>
 </Layout>
-
-<script>
-  // 5. Menu Filter Logic
-  const filterButtons = document.querySelectorAll<HTMLButtonElement>(
-    "#menu-filters .filter-btn"
-  );
-  const menuItems = document.querySelectorAll<HTMLElement>(".menu-item");
-  const menuGrid = document.getElementById("menu-grid");
-
-  // Store the original 'transition:name' to re-apply it
-  // This ensures View Transitions still work when you navigate *away* from the page
-  menuItems.forEach((item) => {
-    item.dataset.transitionName = item.style.viewTransitionName;
-  });
-
-  filterButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      // NO UNDERSCORE
-      const filter = button.dataset.filter;
-
-      // Update button active state
-      filterButtons.forEach((btn) => {
-        const isActive = btn.dataset.filter === filter;
-        btn.classList.toggle("bg-primary", isActive);
-        btn.classList.toggle("text-dark", isActive);
-        btn.classList.toggle("bg-transparent", !isActive);
-        btn.classList.toggle("text-primary", !isActive);
-      });
-
-      // --- This is the key part ---
-      // 1. Temporarily disable View Transitions on the items
-      menuItems.forEach((item) => {
-        item.style.viewTransitionName = "none";
-      });
-
-      // 2. Filter items
-      menuItems.forEach((item) => {
-        const itemCategory = item.dataset.category;
-        const shouldShow = filter === "all" || itemCategory === filter;
-
-        if (shouldShow) {
-          item.style.display = "flex"; // Show
-        } else {
-          item.style.display = "none"; // Hide
-        }
-      });
-
-      // 3. Re-enable View Transitions after a tiny delay
-      // This ensures transitions are ready for the *next* page navigation
-      setTimeout(() => {
-        // NO UNDERSCORE
-        menuItems.forEach((item) => {
-          item.style.viewTransitionName = item.dataset.transitionName || "";
-        });
-      }, 50);
-    });
-  });
-</script>

@@ -2,7 +2,8 @@
 // src/layouts/Layout.astro
 import { Image } from "astro:assets";
 import { ViewTransitions } from "astro:transitions"; // 1. IMPORT
-import "../styles/global.css"; // This imports your styles and theme!
+import "../styles/global.css";
+// This imports your styles and theme!
 import heroImg from "../assets/img/heroimg.jpg";
 
 interface Props {
@@ -26,13 +27,25 @@ const { title } = Astro.props;
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400;500&display=swap"
       rel="stylesheet"
     />
+
     <link
-      rel="stylesheet"
+      rel="preload"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
       integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+      />
+    </noscript>
   </head>
   <body>
     <div class="fixed inset-0 z-[-2]">
@@ -187,6 +200,7 @@ const { title } = Astro.props;
         <div id="modal-caption" class="modal-caption"></div>
       </div>
     </div>
+
     <script>
       // 1. Navbar style change on scroll
       const navbar = document.getElementById("navbar");
@@ -226,7 +240,6 @@ const { title } = Astro.props;
       sectionsToFade.forEach((section) => {
         observer.observe(section);
       });
-
       // 3. Mobile Menu Toggle
       const toggleButton = document.getElementById("navbar-toggler-button");
       const mobileMenu = document.getElementById(
@@ -322,8 +335,7 @@ const { title } = Astro.props;
       /* ========= START: MODAL STYLES ========= */
       .modal-overlay {
         display: none; /* Hidden by default */
-        position: fixed;
-        /* Stay in place */
+        position: fixed; /* Stay in place */
         z-index: 1000; /* Sit on top */
         left: 0;
         top: 0;
@@ -349,7 +361,7 @@ const { title } = Astro.props;
         width: auto;
         max-width: 900px;
         max-height: 90vh;
-        overflow-y: auto; /* Add scroll if content is too tall */
+        overflow-y: auto;
         text-align: center;
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
       }
@@ -385,7 +397,8 @@ const { title } = Astro.props;
       }
 
       .modal-close:hover {
-        color: var(--color-primary, #c5a880); /* Glows with primary color */
+        color: var(--color-primary, #c5a880);
+        /* Glows with primary color */
         transform: scale(1.1);
         /* Slight zoom on hover */
       }
