@@ -94,7 +94,7 @@ function getFilterClasses(filter: string) {
     </div>
   </section>
 
-  <section id="menu" class="bg-black/20 py-24 backdrop-blur-sm">
+  <section id="menu" class="bg-black/20 py-24">
     <div class="container mx-auto px-4">
       <div class="fade-in-section">
         <div class="mb-12 text-center">
@@ -129,8 +129,7 @@ function getFilterClasses(filter: string) {
           class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
         >
           {
-            // --- START: UPDATED MAP (using filtered data) ---
-            filteredMenuData.map((item) => (
+            menuData.map((item) => (
               <MenuItem
                 item={item}
                 transition:name={`menu-${item.name}`}
@@ -158,7 +157,7 @@ function getFilterClasses(filter: string) {
     </div>
   </section>
 
-  <section id="contact" class="bg-black/20 py-24 backdrop-blur-sm">
+  <section id="contact" class="bg-black/20 py-24">
     <div class="container mx-auto px-4">
       <div class="fade-in-section">
         <div class="mb-12 text-center">
