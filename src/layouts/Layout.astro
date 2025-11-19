@@ -202,122 +202,124 @@ const { title } = Astro.props;
     </div>
 
     <script>
-      // 1. Navbar style change on scroll
-      const navbar = document.getElementById("navbar");
-      if (navbar) {
-        window.addEventListener("scroll", () => {
-          if (window.scrollY > 50) {
-            // This replaces the .scrolled class
-            navbar.classList.add(
-              "bg-gray-900/80",
-              "shadow-lg",
-              "backdrop-blur-md"
-            );
-          } else {
-            navbar.classList.remove(
-              "bg-gray-900/80",
-              "shadow-lg",
-              "backdrop-blur-md"
-            );
-          }
-        });
-      }
-
-      // 2. Fade-in animation on scroll
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("is-visible");
+      // Define the setup function to run on every page navigation
+      function setupPage() {
+        // 1. Navbar style change on scroll
+        const navbar = document.getElementById("navbar");
+        if (navbar) {
+          const onScroll = () => {
+            if (window.scrollY > 50) {
+              navbar.classList.add(
+                "bg-gray-900/80",
+                "shadow-lg",
+                "backdrop-blur-md"
+              );
+            } else {
+              navbar.classList.remove(
+                "bg-gray-900/80",
+                "shadow-lg",
+                "backdrop-blur-md"
+              );
             }
-          });
-        },
-        {
-          threshold: 0.1,
+          };
+          window.removeEventListener("scroll", onScroll); // cleanup old listener if any
+          window.addEventListener("scroll", onScroll);
         }
-      );
-      const sectionsToFade = document.querySelectorAll(".fade-in-section");
-      sectionsToFade.forEach((section) => {
-        observer.observe(section);
-      });
-      // 3. Mobile Menu Toggle
-      const toggleButton = document.getElementById("navbar-toggler-button");
-      const mobileMenu = document.getElementById(
-        "mobile-menu"
-      ) as HTMLElement | null;
-      const openIcon = document.getElementById("navbar-icon-open");
-      const closeIcon = document.getElementById("navbar-icon-close");
-      const mobileLinks = mobileMenu?.querySelectorAll("a");
-      // Function to close the menu
-      function closeMobileMenu() {
-        mobileMenu?.classList.add("hidden");
-        openIcon?.classList.remove("hidden");
-        closeIcon?.classList.add("hidden");
-      }
 
-      if (toggleButton && mobileMenu && openIcon && closeIcon) {
-        // Toggle menu on button click
-        toggleButton.addEventListener("click", () => {
-          mobileMenu.classList.toggle("hidden");
-          openIcon.classList.toggle("hidden");
-          closeIcon.classList.toggle("hidden");
+        // 2. Fade-in animation on scroll
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+
+        const sectionsToFade = document.querySelectorAll(".fade-in-section");
+        sectionsToFade.forEach((section) => {
+          observer.observe(section);
         });
-        // Close menu when a link is clicked
-        mobileLinks?.forEach((link) => {
-          link.addEventListener("click", closeMobileMenu);
-        });
-      }
 
-      // 4. Gallery Modal Logic (TypeScript-safe)
-      const modal = document.getElementById(
-        "gallery-modal"
-      ) as HTMLElement | null;
-      const modalImg = modal?.querySelector(
-        ".modal-img"
-      ) as HTMLImageElement | null;
-      const modalCaption = modal?.querySelector(
-        "#modal-caption"
-      ) as HTMLElement | null;
-      const galleryItems =
-        document.querySelectorAll<HTMLAnchorElement>(".gallery-item");
-      const closeBtn = modal?.querySelector(
-        ".modal-close"
-      ) as HTMLButtonElement | null;
+        // 3. Mobile Menu Toggle
+        const toggleButton = document.getElementById("navbar-toggler-button");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const openIcon = document.getElementById("navbar-icon-open");
+        const closeIcon = document.getElementById("navbar-icon-close");
+        const mobileLinks = mobileMenu?.querySelectorAll("a");
 
-      // Check if all essential modal elements exist
-      if (modal && modalImg && modalCaption && closeBtn) {
-        galleryItems.forEach((item) => {
-          item.addEventListener("click", (e) => {
-            e.preventDefault();
+        function closeMobileMenu() {
+          mobileMenu?.classList.add("hidden");
+          openIcon?.classList.remove("hidden");
+          closeIcon?.classList.add("hidden");
+        }
 
-            // Get href and alt text
-            const imgSrc = item.href;
-            const imgAlt = item.dataset.alt || "";
+        if (toggleButton && mobileMenu && openIcon && closeIcon) {
+          // Clone button to remove old event listeners (simple trick)
+          const newBtn = toggleButton.cloneNode(true);
+          toggleButton.parentNode?.replaceChild(newBtn, toggleButton);
 
-            // Set modal content
-            modal.style.display = "flex";
-            modalImg.src = imgSrc;
-            modalCaption.textContent = imgAlt;
+          newBtn.addEventListener("click", () => {
+            mobileMenu.classList.toggle("hidden");
+            openIcon.classList.toggle("hidden");
+            closeIcon.classList.toggle("hidden");
           });
-        });
-        // Function to close the modal
-        function closeModal() {
+
+          mobileLinks?.forEach((link) => {
+            link.addEventListener("click", closeMobileMenu);
+          });
+        }
+
+        // 4. Gallery Modal Logic
+        const modal = document.getElementById("gallery-modal");
+        const modalImg = modal?.querySelector(".modal-img");
+        const modalCaption = modal?.querySelector("#modal-caption");
+        const galleryItems = document.querySelectorAll(".gallery-item");
+        const closeBtn = modal?.querySelector(".modal-close");
+
+        // Helper to close modal
+        const closeModal = () => {
           if (modal && modalImg && modalCaption) {
             modal.style.display = "none";
-            modalImg.src = "";
+            (modalImg as HTMLImageElement).src = "";
             modalCaption.textContent = "";
           }
-        }
+        };
 
-        // Add click event to close button
-        closeBtn.addEventListener("click", closeModal);
-        // Add click event to modal overlay (to close when clicking outside the content)
-        modal.addEventListener("click", (e) => {
-          if (e.target === modal) {
-            closeModal();
-          }
-        });
+        if (modal && modalImg && modalCaption && closeBtn) {
+          // Open Modal
+          galleryItems.forEach((item) => {
+            item.addEventListener("click", (e) => {
+              e.preventDefault();
+              const target = item as HTMLAnchorElement;
+              const imgSrc = target.href;
+              const imgAlt = target.dataset.alt || "";
+
+              modal.style.display = "flex";
+              (modalImg as HTMLImageElement).src = imgSrc;
+              modalCaption.textContent = imgAlt;
+            });
+          });
+
+          // Close Modal Button
+          // Remove old listener by cloning or just adding new one (cloning is safer for SPA)
+          const newCloseBtn = closeBtn.cloneNode(true);
+          closeBtn.parentNode?.replaceChild(newCloseBtn, closeBtn);
+          newCloseBtn.addEventListener("click", closeModal);
+
+          // Close on Overlay Click
+          modal.onclick = (e) => {
+            if (e.target === modal) {
+              closeModal();
+            }
+          };
+        }
       }
+
+      // Run on initial load and after every View Transition navigation
+      document.addEventListener("astro:page-load", setupPage);
     </script>
     <style is:global>
       .fade-in-section {
