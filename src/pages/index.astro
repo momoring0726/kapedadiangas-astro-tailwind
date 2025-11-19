@@ -32,7 +32,15 @@ import ourStoryImg from "../assets/img/About/Our Story.png";
      <div class="container mx-auto px-4">
       <div class="fade-in-section grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
         <div>
-          <Image src={ourStoryImg} width={700} format="webp" quality={85} class="img-fluid rounded-lg shadow-lg" alt="Our Story" />
+          <Image 
+  src={ourStoryImg} 
+  widths={[350, 700]} 
+  sizes="(max-width: 640px) 350px, 700px"
+  format="webp" 
+  quality={85} 
+  class="img-fluid rounded-lg shadow-lg h-auto w-full" 
+  alt="Our Story" 
+/>
         </div>
         <div>
           <h2 class="font-heading text-5xl text-white md:text-6xl">Brewed in the Heart of GenSan</h2>

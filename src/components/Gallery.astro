@@ -15,8 +15,8 @@ import { galleryData } from "../data.js";
         <Image
           src={item.src}
           alt={item.alt}
-          width={600}
-          height={400}
+          widths={[350, 600]}
+          sizes="(max-width: 640px) 350px, 600px"
           format="webp"
           quality={80}
           class="h-auto w-full transform transition-transform duration-300 group-hover:scale-105"
