@@ -7,51 +7,21 @@ import MenuItem from "../components/MenuItem.astro";
 import Gallery from "../components/Gallery.astro";
 import ourStoryImg from "../assets/img/About/Our Story.png";
 
-// --- START: NEW SERVER-SIDE FILTER LOGIC ---
-// 1. Get the active filter from the URL. Default to 'all'.
-const activeFilter = Astro.url.searchParams.get("filter") || "all";
-
-// 2. Create a new, filtered array
-const filteredMenuData = menuData.filter((item) => {
-  if (activeFilter === "all") {
-    return true; // Show all items
-  }
-  return item.category === activeFilter; // Show only matching items
-});
-
-// 3. Update the helper function to read from our activeFilter variable
-function getFilterClasses(filter: string) {
-  const isActive = activeFilter === filter; // Check against the URL param
-  const base =
-    "filter-btn rounded-full border-2 border-primary px-6 py-2 transition-all duration-300";
-  if (isActive) {
-    return `${base} bg-primary text-dark`;
-  }
-  return `${base} bg-transparent text-primary hover:bg-primary hover:text-dark`;
-}
-// --- END: NEW SERVER-SIDE FILTER LOGIC ---
+// --- REMOVED: Server-Side Filter Logic ---
+// We now pass all data to the client and filter with JS
 ---
 
 <Layout title="Kape Dadiangas - A Modern Coffee Experience">
-  <section
-    id="home"
-    class="flex min-h-screen items-center justify-center py-24 text-center"
-  >
+  <section id="home" class="flex min-h-screen items-center justify-center py-24 text-center">
     <div class="container mx-auto px-4">
       <div class="fade-in-section">
         <h1 class="font-heading text-6xl text-white drop-shadow-lg md:text-7xl">
           Your Daily Brew, The GenSan Way.
         </h1>
-        <p
-          class="mx-auto my-6 max-w-2xl text-xl text-light drop-shadow-md md:text-2xl"
-        >
-          Experience the rich aroma of locally-sourced beans in a space that
-          feels like home.
+        <p class="mx-auto my-6 max-w-2xl text-xl text-light drop-shadow-md md:text-2xl">
+          Experience the rich aroma of locally-sourced beans in a space that feels like home.
         </p>
-        <a
-          href="#menu"
-          class="inline-block rounded-full bg-primary px-10 py-4 font-body text-lg font-bold uppercase tracking-wider text-dark transition-all duration-300 hover:-translate-y-1 hover:brightness-110"
-        >
+        <a href="#menu" class="inline-block rounded-full bg-primary px-10 py-4 font-body text-lg font-bold uppercase tracking-wider text-dark transition-all duration-300 hover:-translate-y-1 hover:brightness-110">
           Explore Our Menu
         </a>
       </div>
@@ -59,35 +29,19 @@ function getFilterClasses(filter: string) {
   </section>
 
   <section id="about" class="py-24">
-    <div class="container mx-auto px-4">
-      <div
-        class="fade-in-section grid grid-cols-1 items-center gap-12 lg:grid-cols-2"
-      >
+     <div class="container mx-auto px-4">
+      <div class="fade-in-section grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
         <div>
-          <Image
-            src={ourStoryImg}
-            width={700}
-            format="webp"
-            quality={85}
-            class="img-fluid rounded-lg shadow-lg"
-            alt="Our Story"
-          />
+          <Image src={ourStoryImg} width={700} format="webp" quality={85} class="img-fluid rounded-lg shadow-lg" alt="Our Story" />
         </div>
         <div>
-          <h2 class="font-heading text-5xl text-white md:text-6xl">
-            Brewed in the Heart of GenSan
-          </h2>
+          <h2 class="font-heading text-5xl text-white md:text-6xl">Brewed in the Heart of GenSan</h2>
           <p class="my-4 font-body text-2xl text-primary">Our Story</p>
           <p class="mb-4 text-lg leading-relaxed">
-            Kape Dadiangas is more than a name; it's our promise. It’s a tribute
-            to the original spirit of our home, General Santos City, and a nod
-            to the simple, powerful ritual of a great cup of coffee.
+            Kape Dadiangas is more than a name; it's our promise. It’s a tribute to the original spirit of our home, General Santos City.
           </p>
           <p class="text-lg leading-relaxed">
-            Our journey began with a dream: to create a warm, welcoming space
-            where the community could gather. We partner directly with local
-            farmers in SOCCSKSARGEN, ensuring that every sip you take supports
-            the hands that harvested it.
+            We partner directly with local farmers in SOCCSKSARGEN, ensuring that every sip you take supports the hands that harvested it.
           </p>
         </div>
       </div>
@@ -98,42 +52,23 @@ function getFilterClasses(filter: string) {
     <div class="container mx-auto px-4">
       <div class="fade-in-section">
         <div class="mb-12 text-center">
-          <h2 class="font-heading text-5xl text-white md:text-6xl">
-            Handcrafted With Pride
-          </h2>
+          <h2 class="font-heading text-5xl text-white md:text-6xl">Handcrafted With Pride</h2>
           <p class="mt-2 font-body text-2xl text-primary">Our Menu</p>
         </div>
 
         <div id="menu-filters" class="my-8 flex flex-wrap justify-center gap-2">
-          <a href="#menu" data-filter="all" class={getFilterClasses("all")}
-            >All</a
-          >
-          <a
-            href="?filter=hot#menu"
-            data-filter="hot"
-            class={getFilterClasses("hot")}>Hot Coffee</a
-          >
-          <a
-            href="?filter=iced#menu"
-            data-filter="iced"
-            class={getFilterClasses("iced")}>Iced Coffee</a
-          >
-          <a
-            href="?filter=pastries#menu"
-            data-filter="pastries"
-            class={getFilterClasses("pastries")}>Pastries</a
-          >
+          <button data-filter="all" class="filter-btn active rounded-full border-2 border-primary bg-primary text-dark px-6 py-2 transition-all duration-300">All</button>
+          <button data-filter="hot" class="filter-btn rounded-full border-2 border-primary bg-transparent text-primary hover:bg-primary hover:text-dark px-6 py-2 transition-all duration-300">Hot Coffee</button>
+          <button data-filter="iced" class="filter-btn rounded-full border-2 border-primary bg-transparent text-primary hover:bg-primary hover:text-dark px-6 py-2 transition-all duration-300">Iced Coffee</button>
+          <button data-filter="pastries" class="filter-btn rounded-full border-2 border-primary bg-transparent text-primary hover:bg-primary hover:text-dark px-6 py-2 transition-all duration-300">Pastries</button>
         </div>
-        <div
-          id="menu-grid"
-          class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
-        >
+
+        <div id="menu-grid" class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {
-            filteredMenuData.map((item) => (
+            menuData.map((item) => (
               <MenuItem
                 item={item}
-                transition:name={`menu-${item.name}`}
-                transition:animate="fade"
+                /* We remove view transitions on specific items to prevent layout jumpiness during filtering */
               />
             ))
           }
@@ -146,9 +81,7 @@ function getFilterClasses(filter: string) {
     <div class="container mx-auto px-4">
       <div class="fade-in-section">
         <div class="mb-12 text-center">
-          <h2 class="font-heading text-5xl text-white md:text-6xl">
-            Moments at Kape Dadiangas
-          </h2>
+          <h2 class="font-heading text-5xl text-white md:text-6xl">Moments at Kape Dadiangas</h2>
           <p class="mt-2 font-body text-2xl text-primary">Our Gallery</p>
         </div>
         <Gallery />
@@ -157,7 +90,7 @@ function getFilterClasses(filter: string) {
   </section>
 
   <section id="contact" class="bg-black/20 py-24">
-    <div class="container mx-auto px-4">
+      <div class="container mx-auto px-4">
       <div class="fade-in-section">
         <div class="mb-12 text-center">
           <h2 class="font-heading text-5xl text-white md:text-6xl">Find Us</h2>
@@ -165,53 +98,79 @@ function getFilterClasses(filter: string) {
         </div>
         <div class="grid grid-cols-1 gap-12 lg:grid-cols-2">
           <div class="overflow-hidden rounded-lg border border-white/10">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126912.65964893444!2d125.0747008432832!3d6.11544837508708!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x32f79f22f5c1df49%3A0x62e9314c61cb4611!2sGeneral%20Santos%20City%2C%20South%20Cotabato!5e0!3m2!1sen!2sph!4v1678888888888!5m2!1sen!2sph"
-              width="100%"
-              height="450"
-              style="border:0;"
-              allowfullscreen=""
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126912.65964893444!2d125.0747008432832!3d6.11544837508708!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x32f79f22f5c1df49%3A0x62e9314c61cb4611!2sGeneral%20Santos%20City%2C%20South%20Cotabato!5e0!3m2!1sen!2sph!4v1678888888888!5m2!1sen!2sph" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div>
           <div class="font-body text-lg">
-            <h3 class="mb-4 font-heading text-3xl text-white">Our Home</h3>
-            <p class="flex items-start">
-              <i
-                class="fas fa-map-marker-alt mr-4 w-6 shrink-0 pt-1 text-xl text-primary text-center"
-              ></i>
-              <span>
-                Pioneer Avenue, Brgy. Dadiangas East<br />
-                General Santos City, 9500
-              </span>
-            </p>
-            <h4 class="mt-8 font-heading text-2xl text-white">Opening Hours</h4>
-            <ul class="mt-4 list-inside space-y-2">
-              <li
-                class="flex justify-between border-b border-dotted border-white/20 pb-2"
-              >
-                <strong>Mon – Fri:</strong>
-                <span>9:00 AM – 8:00 PM</span>
-              </li>
-              <li
-                class="flex justify-between border-b border-dotted border-white/20 pb-2"
-              >
-                <strong>Saturday:</strong>
-                <span>10:00 AM – 10:00 PM</span>
-              </li>
-              <li class="flex justify-between pb-2">
-                <strong>Sunday:</strong>
-                <span>10:00 AM – 6:00 PM</span>
-              </li>
-            </ul>
-            <h4 class="mt-8 font-heading text-2xl text-white">Get in Touch</h4>
-            <p class="mt-4 flex items-center">
-              <i class="fas fa-phone mr-4 w-5 text-xl text-primary"></i>
-              <span>(083) 555-1234</span>
-            </p>
+             <h3 class="mb-4 font-heading text-3xl text-white">Our Home</h3>
+             <p class="flex items-start"><i class="fas fa-map-marker-altQP mr-4 w-6 shrink-0 pt-1 text-xl text-primary text-center"></i><span>Pioneer Avenue, Brgy. Dadiangas East<br />General Santos City, 9500</span></p>
+             <h4 class="mt-8 font-heading text-2xl text-white">Opening Hours</h4>
+             <ul class="mt-4 list-inside space-y-2">
+               <li class="flex justify-between border-b border-dotted border-white/20 pb-2"><strong>Mon – Fri:</strong><span>9:00 AM – 8:00 PM</span></li>
+               <li class="flex justify-between border-b border-dotted border-white/20 pb-2"><strong>Saturday:</strong><span>10:00 AM – 10:00 PM</span></li>
+               <li class="flex justify-betweenQB pb-2"><strong>Sunday:</strong><span>10:00 AM – 6:00 PM</span></li>
+             </ul>
+             <h4 class="mt-8 font-heading text-2xl text-white">Get in Touch</h4>
+             <p class="mt-4 flex items-center"><i class="fas fa-phone mr-4 w-5 text-xl text-primary"></i><span>(083) 555-1234</span></p>
           </div>
         </div>
       </div>
     </div>
   </section>
 </Layout>
+
+<script>
+  function initMenuFilters() {
+    const buttons = document.querySelectorAll('.filter-btn');
+    const items = document.querySelectorAll('.menu-item');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        // 1. Remove active class from all buttons
+        buttons.forEach(btn => {
+            btn.classList.remove('bg-primary', 'text-dark');
+            btn.classList.add('bg-transparent', 'text-primary');
+        });
+
+        // 2. Add active class to clicked button
+        button.classList.remove('bg-transparent', 'text-primary');
+        button.classList.add('bg-primary', 'text-dark');
+
+        // 3. Filter items
+        const filterValue = button.getAttribute('data-filter');
+
+        items.forEach(item => {
+            // Cast to HTMLElement to access dataset
+            const element = item as HTMLElement; 
+            const category = element.dataset.category;
+
+            if (filterValue === 'all' || category === filterValue) {
+                element.style.display = 'flex'; // Or 'block', depending on your layout
+                // Optional: Add animation here
+                element.classList.remove('hidden');
+                element.classList.add('fade-in'); 
+            } else {
+                element.style.display = 'none';
+                element.classList.add('hidden');
+            }
+        });
+      });
+    });
+  }
+
+  // Run on initial load
+  initMenuFilters();
+
+  // Run after Astro view transitions (if you navigate away and come back)
+  document.addEventListener('astro:page-load', initMenuFilters);
+</script>
+
+<style>
+  /* Simple fade animation for filtering */
+  .fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
